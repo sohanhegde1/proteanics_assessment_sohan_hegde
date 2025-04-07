@@ -5,7 +5,9 @@ the above link contains my implementation of the required editor.
 The video file 'proteanics_assesment_screen_recording.mp4' contains a video demostration of the editor
 
 The editor callouts can be called by the toolbar at the top of the editor or you can also use the following keyboard shortcuts:
+<br>
 Shift+Command+I Information Callout
+<br>
 Shift+Command+B Best Practice Callout
 Shift+Command+U Warning Callout
 Shift+Command+E Error Callout
