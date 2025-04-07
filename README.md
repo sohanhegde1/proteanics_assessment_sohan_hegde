@@ -9,8 +9,11 @@ The editor callouts can be called by the toolbar at the top of the editor or you
 Shift+Command+I Information Callout
 <br>
 Shift+Command+B Best Practice Callout
+<br>
 Shift+Command+U Warning Callout
+<br>
 Shift+Command+E Error Callout
+<br>
 
 The '/' key opens up the slashcommands menu.
 
