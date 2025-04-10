@@ -8,6 +8,8 @@ import FloatingMenuExtension from '@tiptap/extension-floating-menu'
 import Toolbar from './Toolbar'
 import { CalloutExtension, CalloutType } from '../extensions/CalloutExtension'
 import { SlashCommandsExtension } from '../extensions/SlashCommands'
+import { AIAssistExtension } from '../extensions/AIAssistExtension'
+import AIAssistManager from './AIAssistManager'
 import { 
   Bold, 
   Italic, 
@@ -16,7 +18,8 @@ import {
   Heading1, 
   Heading2,
   Code,
-  Quote
+  Quote,
+  Sparkles
 } from 'lucide-react'
 
 const TiptapEditor = () => {
@@ -65,10 +68,13 @@ const TiptapEditor = () => {
       SlashCommandsExtension,
       BubbleMenuExtension,
       FloatingMenuExtension,
+      AIAssistExtension.configure({
+        shortcut: 'Shift-Mod-a', // Shift+Cmd/Ctrl+A
+      }),
     ],
     content: `
-      <h1>Tiptap Editor with Custom Callouts</h1>
-      <p>This is a fully functional rich text editor with custom callout support.</p>
+      <h1>Tiptap Editor with Custom Callouts and AI Assist</h1>
+      <p>This is a fully functional rich text editor with custom callout support and AI-powered editing.</p>
       <p>Here's how to use callouts:</p>
       <ul>
         <li>Click the callout icons in the toolbar</li>
@@ -76,7 +82,15 @@ const TiptapEditor = () => {
         <li>Type / at the beginning of a line to use slash commands</li>
         <li>Click the icon in a callout to cycle through callout types</li>
       </ul>
-      <p>Try creating a callout below and use formatting inside it!</p>
+      <p><strong>NEW: AI Assist Feature</strong></p>
+      <p>To use the AI to help edit your text:</p>
+      <ol>
+        <li>Select text you want to modify</li>
+        <li>Press ${isMac ? 'Shift+Command+A' : 'Shift+Ctrl+A'} or click the AI button in the toolbar</li>
+        <li>Enter instructions for how to change the text</li>
+        <li>Review suggested changes and apply or cancel</li>
+      </ol>
+      <p>Try selecting this paragraph and using AI Assist to make it more concise!</p>
     `,
     editorProps: {
       attributes: {
@@ -159,6 +173,13 @@ const TiptapEditor = () => {
             >
               <Code size={16} />
             </button>
+            <button
+              onClick={() => editor.commands.triggerAIAssist()}
+              className={`p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-purple-500`}
+              title="AI Assist"
+            >
+              <Sparkles size={16} />
+            </button>
           </div>
         </BubbleMenu>
       )}
@@ -221,6 +242,9 @@ const TiptapEditor = () => {
         </FloatingMenu>
       )}
       
+      {/* AI Assist Manager for handling AI editing features */}
+      <AIAssistManager editor={editor} />
+      
       <EditorContent editor={editor} className="p-4" />
       
       <div className="p-3 bg-gray-50 dark:bg-gray-900 border-t border-gray-300 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-400">
@@ -232,6 +256,7 @@ const TiptapEditor = () => {
           <div><kbd className="px-1 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">{isMac ? 'Shift+Command+E' : 'Shift+Control+E'}</kbd> Error Callout</div>
           <div><kbd className="px-1 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">/</kbd> Type anytime to open command menu</div>
           <div><kbd className="px-1 py-0.5 bg-gray-200 dark:bg-gray-700 rounded">Shift+Enter</kbd> For soft break inside callouts</div>
+          <div><kbd className="px-1 py-0.5 bg-gray-200 dark:bg-gray-700 rounded text-purple-600 dark:text-purple-400">{isMac ? 'Shift+Command+A' : 'Shift+Control+A'}</kbd> <span className="text-purple-600 dark:text-purple-400">AI Assist</span></div>
         </div>
       </div>
     </div>
