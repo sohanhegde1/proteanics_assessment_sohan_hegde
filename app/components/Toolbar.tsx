@@ -18,7 +18,8 @@ import {
   Undo,
   Redo,
   Strikethrough,
-  Trash2
+  Trash2,
+  Sparkles // Added Sparkles icon for AI assist
 } from 'lucide-react'
 import { CalloutType } from '../extensions/CalloutExtension'
 
@@ -60,6 +61,13 @@ const Toolbar: React.FC<ToolbarProps> = ({ editor }) => {
         editor.isActive('blockquote') ||
         editor.isActive('codeBlock')) {
       editor.chain().focus().setParagraph().run();
+    }
+  }
+
+  // Function to trigger AI assist
+  const triggerAIAssist = () => {
+    if (editor && editor.commands.triggerAIAssist) {
+      editor.commands.triggerAIAssist()
     }
   }
 
@@ -206,6 +214,18 @@ const Toolbar: React.FC<ToolbarProps> = ({ editor }) => {
         title={`Error Callout (${isMac ? 'Shift+Command+E' : 'Shift+Control+E'})`}
       >
         <AlertCircle size={18} className="text-error" />
+      </button>
+      
+      {/* AI Assist Button - Added new button */}
+      <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1"></div>
+      
+      <button
+        onClick={triggerAIAssist}
+        className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 bg-purple-50 dark:bg-purple-900/30 text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-300 flex items-center"
+        title={`AI Assist (${isMac ? 'Shift+Command+A' : 'Shift+Ctrl+A'})`}
+      >
+        <Sparkles size={18} className="mr-1" />
+        <span className="text-sm font-medium">AI Assist</span>
       </button>
     </div>
   )
