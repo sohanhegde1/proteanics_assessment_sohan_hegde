@@ -238,6 +238,7 @@ body {
 .mb-6 { margin-bottom: 1.5rem; }
 .text-gray-700 { color: #374151; }
 .space-y-2 > * + * { margin-top: 0.5rem; }
+
 /* Dark mode variables - Chrome-like */
 .dark {
   /* Background colors */
@@ -397,3 +398,203 @@ body {
   color: var(--text-primary) !important;
 }
 
+/* AI Assist positioning and animation */
+.ai-assist-container {
+  transition: all 0.2s ease-in-out;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+.ai-assist-wrapper {
+  position: relative;
+}
+
+/* For small screens only */
+@media (max-width: 768px) {
+  .ai-popup {
+    max-width: calc(100vw - 40px);
+  }
+}
+
+/* Base popup styling */
+.ai-popup {
+  --ai-primary: rgb(126, 34, 206);
+  --ai-primary-light: rgb(168, 85, 247);
+  --ai-secondary: rgb(79, 70, 229);
+  --ai-success: rgb(34, 197, 94);
+  --ai-error: rgb(239, 68, 68);
+  --ai-added: rgba(34, 197, 94, 0.1);
+  --ai-added-text: rgb(22, 163, 74);
+  --ai-removed: rgba(239, 68, 68, 0.1);
+  --ai-removed-text: rgb(220, 38, 38);
+  
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+  background-color: white;
+  transform-origin: top right;
+  opacity: 1;
+  transform: scale(0.98) translateY(-10px);
+  transition: transform 0.2s ease;
+  width: 384px;
+  max-width: calc(100vw - 40px);
+}
+
+.dark .ai-popup {
+  --ai-added: rgba(34, 197, 94, 0.2);
+  --ai-added-text: rgb(74, 222, 128);
+  --ai-removed: rgba(239, 68, 68, 0.2);
+  --ai-removed-text: rgb(252, 165, 165);
+  background-color: rgb(31, 41, 55); /* dark gray background */
+}
+
+.ai-popup-active {
+  transform: scale(1) translateY(0);
+}
+
+/* Animation for popup entrance */
+.ai-popup-enter {
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.95) translateY(-10px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Loading animation */
+.ai-loading-ring {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid var(--ai-primary);
+  animation: spin 1.5s linear infinite;
+}
+
+.dark .ai-loading-ring {
+  border-color: #2a2a2a;
+  border-top-color: var(--ai-primary-light);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Loading dots animation */
+.ai-loading-dots::after {
+  content: "...";
+  display: inline-block;
+  animation: dots 1.5s infinite;
+  width: 1.2em;
+  text-align: left;
+}
+
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+
+/* Diff styling */
+.ai-diff-added {
+  background-color: var(--ai-added);
+  color: var(--ai-added-text);
+  font-weight: 500;
+  border-radius: 2px;
+  padding: 0 2px;
+  margin: 0 1px;
+}
+
+.ai-diff-removed {
+  background-color: var(--ai-removed);
+  color: var(--ai-removed-text);
+  text-decoration: line-through;
+  border-radius: 2px;
+  padding: 0 2px;
+  margin: 0 1px;
+}
+
+/* Custom scrollbar for diff view */
+.ai-popup .max-h-60 {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(126, 34, 206, 0.3) transparent;
+}
+
+.ai-popup .max-h-60::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ai-popup .max-h-60::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ai-popup .max-h-60::-webkit-scrollbar-thumb {
+  background-color: rgba(126, 34, 206, 0.3);
+  border-radius: 3px;
+}
+
+.dark .ai-popup .max-h-60::-webkit-scrollbar-thumb {
+  background-color: rgba(168, 85, 247, 0.3);
+}
+
+/* Custom focus styling */
+.ai-popup input:focus {
+  outline: none;
+}
+
+/* Button hover effects */
+.ai-popup button {
+  transition: all 0.2s ease;
+}
+
+.ai-popup button:active {
+  transform: scale(0.97);
+}
+
+/* Gradient button hover effect */
+.ai-popup button[type="submit"]:hover,
+.ai-popup button.bg-gradient-to-r:hover {
+  box-shadow: 0 2px 8px rgba(126, 34, 206, 0.4);
+}
+
+.dark .ai-popup button[type="submit"]:hover,
+.dark .ai-popup button.bg-gradient-to-r:hover {
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.4);
+}
+
+/* Suggested prompts animation */
+.ai-popup .flex-wrap button {
+  transition: all 0.15s ease;
+}
+
+.ai-popup .flex-wrap button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dark .ai-popup .flex-wrap button:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Success animations */
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.ai-popup .bg-green-100 svg {
+  animation: checkmark 0.5s ease-out forwards;
+}
