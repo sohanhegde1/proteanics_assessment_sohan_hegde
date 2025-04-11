@@ -20,3 +20,6 @@ The '/' key opens up the slashcommands menu.
 The editor also has a dark mode feature where you shift to dark mode if you find it more comfortable.
 
 The editor also has features like bold text, italics, bullet points, numbered points e.t.c which can be accessed from the toolbar or you can look up the shortcut using the slashcommands menu.
+
+The video file 'ai_assist_screen_recording.mp4' contains a video demostration of ai_assistant of the editor, The AI assistant does not use any actual AI API but it contains the api file where the actual api can be added. The demonstrattion just shows how the ai assistant would work.
+
